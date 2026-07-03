@@ -1,6 +1,8 @@
 from pathlib import Path
 import shutil
 
+from app.logger import log_info, log_error
+
 FILE_TYPES = {
     ".pdf": "PDF",
     ".jpg": "Images",
@@ -17,22 +19,25 @@ FILE_TYPES = {
 
 def organize_folder(folder_path: str):
 
-    # Input मधील extra spaces आणि quotes काढून टाका
+    # Remove extra spaces and quotes
     folder_path = folder_path.strip().strip('"')
 
     folder = Path(folder_path)
 
-    # Debug Information
+    # Debug
     print("\n========== DEBUG ==========")
     print(f"Input Path    : {folder_path}")
     print(f"Resolved Path : {folder.resolve()}")
     print(f"Exists        : {folder.exists()}")
     print("===========================\n")
 
+    # Folder Check
     if not folder.exists():
+        log_error("Folder does not exist.")
         print("❌ Folder does not exist.")
         return
 
+    # Organize Files
     for file in folder.iterdir():
 
         if file.is_dir():
@@ -45,6 +50,11 @@ def organize_folder(folder_path: str):
 
         shutil.move(str(file), str(destination / file.name))
 
-        print(f"✅ Moved: {file.name} -> {category}")
+        message = f"Moved: {file.name} -> {category}"
+
+        print(message)
+        log_info(message)
 
     print("\n🎉 File organization completed successfully.")
+
+    log_info("File organization completed successfully.")
