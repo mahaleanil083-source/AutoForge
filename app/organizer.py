@@ -17,7 +17,7 @@ FILE_TYPES = {
 }
 
 
-def organize_folder(folder_path: str):
+def organize_folder(folder_path, progress_callback=None, log_callback=None):
 
     # Remove extra spaces and quotes
     folder_path = folder_path.strip().strip('"')
@@ -38,6 +38,11 @@ def organize_folder(folder_path: str):
         return
 
     # Organize Files
+    files = [f for f in folder.iterdir() if f.is_file()]
+    total_files = len(files)
+
+    if total_files == 0:
+     return
     for file in folder.iterdir():
 
         if file.is_dir():
@@ -48,12 +53,23 @@ def organize_folder(folder_path: str):
         destination = folder / category
         destination.mkdir(exist_ok=True)
 
-        shutil.move(str(file), str(destination / file.name))
+    for index, file in enumerate(files, start=1):
+       progress = index / total_files
 
-        message = f"Moved: {file.name} -> {category}"
+    if progress_callback:
+     progress_callback(progress)
 
-        print(message)
-        log_info(message)
+    message = f"Moved: {file.name} -> {category}"
+
+    if log_callback:
+     log_callback(message)
+
+    log_info(message) 
+    message = f"Moved: {file.name} -> {category}"
+        
+
+    print(message)
+    log_info(message)
 
     print("\n🎉 File organization completed successfully.")
 
