@@ -20,7 +20,7 @@ class MainWindow(ctk.CTk):
 
         # Window
         self.title("🚀 AutoForge v2.0")
-        self.geometry("950x700")
+        self.geometry("1100x750")
         self.resizable(False, False)
 
         self.selected_folder = ""
@@ -91,6 +91,7 @@ class MainWindow(ctk.CTk):
 
         self.progress_title.pack()
 
+
         # Progress Bar
         self.progress = ctk.CTkProgressBar(
             self,
@@ -118,6 +119,8 @@ class MainWindow(ctk.CTk):
         self.log_box.pack(pady=10)
 
         self.add_log("🚀 AutoForge Started...")
+
+        
         # =====================================================
     # Folder Selection
     # =====================================================
@@ -204,6 +207,7 @@ class MainWindow(ctk.CTk):
                     f"✅ Found {len(duplicates)} Duplicate Files"
                 )
 
+
                 self.after(
                     0,
                     lambda: DuplicateWindow(
@@ -249,4 +253,6 @@ class MainWindow(ctk.CTk):
 if __name__ == "__main__":
 
     app = MainWindow()
-    app.mainloop()                            
+    app.mainloop()
+    
+    
