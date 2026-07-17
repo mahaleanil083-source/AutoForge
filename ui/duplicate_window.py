@@ -293,13 +293,15 @@ class DuplicateWindow(ctk.CTkToplevel):
 
         self.preview_frame = ctk.CTkFrame(
             self.content_frame,
-            width=260
+            width=280
         )
 
         self.preview_frame.pack(
             side="right",
-            fill="y"
+            fill="y",
+            padx=(10, 0)
         )
+        self.preview_frame.pack_propagate(False)
 
         self.preview_title = ctk.CTkLabel(
             self.preview_frame,
@@ -314,8 +316,12 @@ class DuplicateWindow(ctk.CTkToplevel):
         self.preview_label = ctk.CTkLabel(
             self.preview_frame,
             text="Select a file",
-            width=220,
-            height=220
+            width=240,
+            height=240
+        )
+
+        self.preview_label.pack(
+            pady=10
         )
 
         self.preview_info = ctk.CTkLabel(
@@ -329,11 +335,6 @@ class DuplicateWindow(ctk.CTkToplevel):
             fill="x",
             padx=10,
             pady=(5, 10)
-        )
-
-        self.preview_label.pack(
-            padx=20,
-            pady=20
         )
 
         # ==========================================
@@ -368,7 +369,7 @@ class DuplicateWindow(ctk.CTkToplevel):
         self.delete_btn = ctk.CTkButton(
             self.bottom_frame,
             text="🗑 Delete Selected",
-            width=120,
+            width=140,
             command=self.delete_selected,
             state="disabled"
         )
